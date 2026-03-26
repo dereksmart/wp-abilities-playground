@@ -31,6 +31,11 @@
 			"pluginPath": "workshop-abilities/workshop-abilities.php"
 		},
 		{
+			"step": "login",
+			"username": "admin",
+			"password": "password"
+		},
+		{
 			"step": "setSiteOptions",
 			"options": {
 				"blogname": "AI Workshop Site",

@@ -37,7 +37,7 @@ This boots WP Playground as a **local server** at `http://localhost:9400` with:
 - Admin auto-logged in
 - API auth via `X-Workshop-Token: workshop-secret` header
 
-To open the browser view instead (visual only, no API access):
+**Always open the browser after starting the server** so the user can see the site:
 ```bash
 npm run open
 ```
