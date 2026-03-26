@@ -1,0 +1,14 @@
+{
+	"mcpServers": {
+		"wordpress-playground": {
+			"command": "npx",
+			"args": [
+				"@wp-playground/cli",
+				"--blueprint=blueprint-inline.json",
+				"--",
+				"wp",
+				"mcp-server"
+			]
+		}
+	}
+}

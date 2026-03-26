@@ -1,0 +1,51 @@
+{
+	"$schema": "https://playground.wordpress.net/blueprint-schema.json",
+	"landingPage": "/wp-admin/plugins.php",
+	"preferredVersions": {
+		"php": "8.2",
+		"wp": "6.9"
+	},
+	"phpExtensionBundles": [
+		"kitchen-sink"
+	],
+	"features": {
+		"networking": true
+	},
+	"steps": [
+		{
+			"step": "mkdir",
+			"path": "/wordpress/wp-content/plugins/workshop-abilities"
+		},
+		{
+			"step": "writeFile",
+			"path": "/wordpress/wp-content/plugins/workshop-abilities/workshop-abilities.php",
+			"data": {
+				"resource": "url",
+				"url": "https://raw.githubusercontent.com/Automattic/ai-enablement-applied-wp-ai/trunk/track-b/playground/plugin/workshop-abilities.php"
+			}
+		},
+		{
+			"step": "writeFile",
+			"path": "/wordpress/wp-content/plugins/workshop-abilities/CLAUDE.md",
+			"data": {
+				"resource": "url",
+				"url": "https://raw.githubusercontent.com/Automattic/ai-enablement-applied-wp-ai/trunk/track-b/playground/plugin/CLAUDE.md"
+			}
+		},
+		{
+			"step": "activatePlugin",
+			"pluginPath": "workshop-abilities/workshop-abilities.php"
+		},
+		{
+			"step": "setSiteOptions",
+			"options": {
+				"blogname": "AI Workshop Site",
+				"blogdescription": "Building WordPress abilities with AI"
+			}
+		},
+		{
+			"step": "runPHP",
+			"code": "<?php require '/wordpress/wp-load.php'; for ( $i = 1; $i <= 5; $i++ ) { wp_insert_post( array( 'post_title' => 'Sample Post ' . $i, 'post_content' => 'This is sample content for post number ' . $i . '. It covers topics like WordPress development, AI integration, and building abilities for the WordPress platform.', 'post_status' => 'publish', 'post_author' => 1 ) ); } wp_insert_term( 'AI', 'category' ); wp_insert_term( 'WordPress', 'category' ); wp_insert_term( 'Development', 'category' ); ?>"
+		}
+	]
+}
