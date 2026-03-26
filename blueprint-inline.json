@@ -24,7 +24,7 @@
 		{
 			"step": "writeFile",
 			"path": "/wordpress/wp-content/mu-plugins/workshop-api-auth.php",
-			"data": "<?php\n/**\n * Workshop API Auth — authenticates REST requests with a workshop token.\n * Sends X-Workshop-Token: workshop-secret header to authenticate as admin.\n * This is a workshop convenience. Never do this in production.\n */\nadd_filter( 'determine_current_user', function ( $user_id ) {\n\tif ( $user_id ) return $user_id;\n\t$token = isset( $_SERVER['HTTP_X_WORKSHOP_TOKEN'] ) ? $_SERVER['HTTP_X_WORKSHOP_TOKEN'] : '';\n\tif ( 'workshop-secret' === $token ) {\n\t\t$user = get_user_by( 'login', 'admin' );\n\t\tif ( $user ) return $user->ID;\n\t}\n\treturn $user_id;\n}, 20 );\n"
+			"data": "<?php\n/**\n * Workshop Auto-Auth — auto-login for this sandbox environment.\n * 1. REST API: X-Workshop-Token: workshop-secret header authenticates as admin.\n * 2. Browser: auto-sets admin login cookie if not already logged in.\n * This is a workshop convenience. Never do this in production.\n */\nadd_filter( 'determine_current_user', function ( $user_id ) {\n\tif ( $user_id ) return $user_id;\n\t$token = isset( $_SERVER['HTTP_X_WORKSHOP_TOKEN'] ) ? $_SERVER['HTTP_X_WORKSHOP_TOKEN'] : '';\n\tif ( 'workshop-secret' === $token ) {\n\t\t$user = get_user_by( 'login', 'admin' );\n\t\tif ( $user ) return $user->ID;\n\t}\n\treturn $user_id;\n}, 20 );\nadd_action( 'init', function () {\n\tif ( is_user_logged_in() ) return;\n\t$user = get_user_by( 'login', 'admin' );\n\tif ( $user ) {\n\t\twp_set_current_user( $user->ID );\n\t\twp_set_auth_cookie( $user->ID, true );\n\t}\n} );\n"
 		},
 		{
 			"step": "activatePlugin",
